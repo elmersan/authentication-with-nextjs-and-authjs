@@ -24,6 +24,7 @@ import {
   SidebarHeader,
   SidebarRail,
 } from "@/components/ui/sidebar"
+import { Session } from "next-auth"
 
 // This is sample data.
 const data = {
@@ -121,7 +122,15 @@ const data = {
   ]
 }
 
-export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+interface Props {
+  props?: React.ComponentProps<typeof Sidebar>,
+  session: Session
+}
+
+export function AppSidebar({ props, session }: Props) {
+
+  const user = session.user
+
   return (
     <Sidebar collapsible="icon" {...props}>
       <SidebarHeader>
@@ -131,7 +140,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         <NavMain items={data.navMain} />
       </SidebarContent>
       <SidebarFooter>
-        <NavUser user={data.user} />
+        <NavUser user={user} />
       </SidebarFooter>
       <SidebarRail />
     </Sidebar>
